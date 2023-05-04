@@ -2,6 +2,6 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP TABLE "reminder", "account_has_favorite", "animal", "veterinary", "account";
 
 COMMIT;
