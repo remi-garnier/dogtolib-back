@@ -11,7 +11,9 @@ CREATE TABLE "account" (
   "password" TEXT NOT NULL,
   "address" TEXT NOT NULL,
   "zip_code" TEXT NOT NULL,
-  "city" TEXT NOT NULL
+  "city" TEXT NOT NULL,
+  "role" TEXT NOT NULL,
+  CHECK ("role" in ('V', 'O', 'A'))
 );
 
 CREATE TABLE "veterinary" (
