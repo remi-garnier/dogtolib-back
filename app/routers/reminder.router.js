@@ -21,7 +21,9 @@ reminderRouter.route('/animal/:id')
 /**
  * @summary Renvoi les rappels propres à un animal donné
  */
-  .get(reminderControler.getAnimalReminders)
+  .get(reminderControler.getAnimalReminders);
+
+reminderRouter.route('/:id(\\d+)')
   .patch(reminderControler.patchReminder)
   .delete(reminderControler.deleteReminder);
 

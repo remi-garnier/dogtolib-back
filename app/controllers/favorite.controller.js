@@ -7,7 +7,7 @@ const favoriteController = {
     res.json({ reponse: 'create favorite veterinary' });
   },
 
-  deleteFAvorite: function async(req, res) {
+  deleteFavorite: function async(req, res) {
     res.json({ reponse: 'delete favorite veterinary' });
   },
 };
