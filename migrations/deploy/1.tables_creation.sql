@@ -19,8 +19,8 @@ CREATE TABLE "account" (
 CREATE TABLE "veterinary" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "payment_modes" TEXT,
-  "opening_hour" TIMESTAMPTZ,
-  "closing_hour" TIMESTAMPTZ,
+  "opening_hour" TIME WITH TIME ZONE,
+  "closing_hour" TIME WITH TIME ZONE,
   "account_id" INT NOT NULL REFERENCES "account"("id") ON DELETE CASCADE
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE "reminder" (
   "label" TEXT NOT NULL,
   "datetime" TIMESTAMPTZ NOT NULL,
   "animal_id" INT REFERENCES "animal"("id") ON DELETE CASCADE,
-  "veterinary" INT REFERENCES "veterinary"("id") ON DELETE CASCADE
+  "veterinary_id" INT REFERENCES "veterinary"("id") ON DELETE CASCADE
 );
 
 COMMIT;
