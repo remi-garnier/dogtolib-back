@@ -1,17 +1,17 @@
 const veterinaryController = {
-  getVeterinaryProfile: function async(req, res) {
+  async getVeterinaryProfile(req, res) {
     res.json({ reponse: 'profil veterinary' });
   },
 
-  createVeterinaryProfile: function async(req, res) {
+  async createVeterinaryProfile(req, res) {
     res.json({ reponse: 'create veterinary' });
   },
 
-  updateVeterinaryProfile: function async(req, res) {
+  async updateVeterinaryProfile(req, res) {
     res.json({ reponse: 'update veterinary' });
   },
 
-  searchVeterinary: function async(req, res) {
+  async searchVeterinary(req, res) {
     res.json({ reponse: 'veterinary search result' });
   },
 };

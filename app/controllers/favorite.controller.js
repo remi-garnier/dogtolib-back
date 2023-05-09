@@ -1,13 +1,13 @@
 const favoriteController = {
-  getFavorite: function async(req, res) {
+  async getFavorite(req, res) {
     res.json({ reponse: 'list of favorite veterinary' });
   },
 
-  createFavorite: function async(req, res) {
+  async createFavorite(req, res) {
     res.json({ reponse: 'create favorite veterinary' });
   },
 
-  deleteFavorite: function async(req, res) {
+  async deleteFavorite(req, res) {
     res.json({ reponse: 'delete favorite veterinary' });
   },
 };

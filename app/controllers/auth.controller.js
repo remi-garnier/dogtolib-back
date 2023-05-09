@@ -1,9 +1,9 @@
 const authController = {
-  signin: function async(req, res) {
+  async signin(req, res) {
     res.json({ response: 'signin' });
   },
 
-  register: function async(req, res) {
+  async register(req, res) {
     res.json({ response: 'register' });
   },
 };
