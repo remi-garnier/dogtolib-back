@@ -16,7 +16,7 @@ router.use('/veterinary', veterinaryRouter);
 router.use('/favorite', favoriteRouter);
 
 router.use(() => {
-  throw new Error('API Route not found', { statusCode: 404 });
+  throw new Error('API Route not found', { cause: 404 });
 });
 
 module.exports = router;
