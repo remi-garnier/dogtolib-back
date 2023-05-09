@@ -1,10 +1,13 @@
+const { account } = require('../models/index.datamapper');
+
 const profilController = {
 
-  getProfil: function async(req, res) {
-    res.json({ reponse: 'profil user' });
+  async getProfil(req, res) {
+    const profile = await account.findByPk(1);
+    res.json(profile);
   },
 
-  updateProfil: function async(req, res) {
+  async updateProfil(req, res) {
     res.json({ reponse: 'profil update' });
   },
 };
