@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const debug = require('debug')('app:authController');
 const InvalidCredentialError = require('../errors/invalid-credentials.error');
 
-const { account } = require('../models/index.datamapper');
+const { account, veterinary } = require('../models/index.datamapper');
 
 const authController = {
 
@@ -44,7 +44,27 @@ const authController = {
   },
 
   async register(req, res) {
-    res.json({ response: 'register' });
+    const accountData = req.body;
+    // vérifier si l'utilisateur existe déjà
+    const existingUser = await account.findByEmail(accountData.email);
+    if (existingUser) {
+      throw new Error('User with this email already exists');
+    }
+
+    // hasher le mot de passe
+    const hashedPassword = await bcrypt.hash(accountData.password, 10);
+    accountData.password = hashedPassword;
+
+    // créer le compte en base
+    const newAccount = await account.create(accountData);
+    delete newAccount.password;
+
+    // Si vétérinaire créer l'entrée dans veterinary
+    if (accountData.role === 'V') {
+      await veterinary.create({ account_id: newAccount.id });
+    }
+
+    res.json({ newAccount });
   },
 };
 
