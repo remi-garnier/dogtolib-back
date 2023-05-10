@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const debug = require('debug')('app:authController');
 const InvalidCredentialError = require('../errors/invalid-credentials.error');
+const UsedMailError = require('../errors/used-mail.error');
 
 const { account, veterinary } = require('../models/index.datamapper');
 
@@ -48,7 +49,7 @@ const authController = {
     // vérifier si l'utilisateur existe déjà
     const existingUser = await account.findByEmail(accountData.email);
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new UsedMailError('User with this email already exists');
     }
 
     // hasher le mot de passe

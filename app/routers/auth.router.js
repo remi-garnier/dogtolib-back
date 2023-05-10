@@ -3,6 +3,7 @@ const authController = require('../controllers/auth.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
 const validate = require('../middlewares/validation.middleware');
 const signinSchema = require('../validation/signin.validation');
+const registerSchema = require('../validation/register.validation');
 
 const authRouter = express.Router();
 
@@ -28,6 +29,6 @@ authRouter.post('/signin', validate(signinSchema, 'body'), controllerWrapper(aut
    * @param {string} body.role requis - rôle de l'utilisateur (vétérinaire ou propriétaire)
    * @param {string} body.phone optionnel - téléphone de l'utilisateur
    */
-authRouter.post('/register', controllerWrapper(authController.register));
+authRouter.post('/register', validate(registerSchema, 'body'), controllerWrapper(authController.register));
 
 module.exports = authRouter;
