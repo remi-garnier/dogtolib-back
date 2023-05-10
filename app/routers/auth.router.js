@@ -1,5 +1,6 @@
 const express = require('express');
 const authController = require('../controllers/auth.controller');
+const controllerWrapper = require('../utils/controller-wrapper');
 
 const authRouter = express.Router();
 
@@ -10,7 +11,7 @@ const authRouter = express.Router();
    * @param {string} body.password requis - mot de passe de l'utilisateur
    * @returns JWT 200 - Token d'authentification
    */
-authRouter.post('/signin', authController.signin);
+authRouter.post('/signin', controllerWrapper(authController.signin));
 
 /**
    * POST /auth/register
@@ -25,6 +26,6 @@ authRouter.post('/signin', authController.signin);
    * @param {string} body.role requis - rôle de l'utilisateur (vétérinaire ou propriétaire)
    * @param {string} body.phone optionnel - téléphone de l'utilisateur
    */
-authRouter.post('/register', authController.register);
+authRouter.post('/register', controllerWrapper(authController.register));
 
 module.exports = authRouter;

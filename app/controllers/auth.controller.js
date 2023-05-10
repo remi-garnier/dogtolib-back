@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const debug = require('debug')('app:authController');
+const InvalidCredentialError = require('../errors/invalid-credentials.error');
 
 const { account } = require('../models/index.datamapper');
 
@@ -20,7 +21,7 @@ const authController = {
     // Si il n'existe pas renvoyer une erreur
     if (!user) {
       debug(`user ${email} not found}`);
-      return res.status(401).json({ error: 'invalid credentials' });
+      throw new InvalidCredentialError('Unable to login with credentials provided');
     }
     // vérifier le mot de passe
     const validPassword = await bcrypt.compare(password, user.password);
@@ -28,7 +29,7 @@ const authController = {
     // Si il est invalide renvoyer une erreur
     if (!validPassword) {
       debug(`user ${email} invalid password`);
-      return res.status(401).json({ error: 'invalid credentials' });
+      throw new InvalidCredentialError('Unable to login with credentials provided');
     }
 
     // générer et renvoyer un token jwt
