@@ -5,18 +5,19 @@ const profileRouter = require('./profile.router');
 const reminderRouter = require('./reminder.router');
 const veterinaryRouter = require('./veterinary.router');
 const favoriteRouter = require('./favorite.router');
+const authMiddleware = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.use('/animal', aminalRouter);
+router.use('/animal', authMiddleware.checkToken, aminalRouter);
 router.use('/auth', authRouter);
-router.use('/profile', profileRouter);
-router.use('/reminder', reminderRouter);
-router.use('/veterinary', veterinaryRouter);
-router.use('/favorite', favoriteRouter);
+router.use('/profile', authMiddleware.checkToken, profileRouter);
+router.use('/reminder', authMiddleware.checkToken, reminderRouter);
+router.use('/veterinary', authMiddleware.checkToken, veterinaryRouter);
+router.use('/favorite', authMiddleware.checkToken, favoriteRouter);
 
 router.use(() => {
-  throw new Error('API Route not found', { cause: 404 });
+  throw new Error('API Route not found', { statusCode: 404 });
 });
 
 module.exports = router;

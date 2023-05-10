@@ -31,7 +31,6 @@ const authController = {
       debug(`user ${email} invalid password`);
       throw new InvalidCredentialError('Unable to login with credentials provided');
     }
-
     // générer et renvoyer un token jwt
     const token = jwt.sign({
       id: user.id,
