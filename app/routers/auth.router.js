@@ -1,6 +1,8 @@
 const express = require('express');
 const authController = require('../controllers/auth.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
+const validate = require('../middlewares/validation.middleware');
+const signinSchema = require('../validation/signin.validation');
 
 const authRouter = express.Router();
 
@@ -11,7 +13,7 @@ const authRouter = express.Router();
    * @param {string} body.password requis - mot de passe de l'utilisateur
    * @returns JWT 200 - Token d'authentification
    */
-authRouter.post('/signin', controllerWrapper(authController.signin));
+authRouter.post('/signin', validate(signinSchema, 'body'), controllerWrapper(authController.signin));
 
 /**
    * POST /auth/register

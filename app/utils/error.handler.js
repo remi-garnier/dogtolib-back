@@ -10,6 +10,10 @@ module.exports = (err, req, res, next) => {
     return res.status(err.status).json({ error: err.message });
   }
 
+  // Erreur de validation JOI
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({ error: err.details[0].message });
+  }
   // Erreur connexion à la base de données
   if (err.code === 'ECONNREFUSED') {
     return res.status(503).json({ error: 'Database connection refused' });
