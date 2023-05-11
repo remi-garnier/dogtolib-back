@@ -1,4 +1,4 @@
-const { account } = require('../models/index.datamapper');
+const { account, veterinary } = require('../models/index.datamapper');
 
 const profilController = {
 
@@ -7,7 +7,10 @@ const profilController = {
     if (req.userRole === 'O') {
       profile = await account.findByPk(req.userId);
       delete profile.password;
+    } else if (req.userRole === 'V') {
+      profile = await veterinary.findByAccountId(req.userId);
     }
+
     res.json(profile);
   },
 
