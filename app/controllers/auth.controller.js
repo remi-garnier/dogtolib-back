@@ -55,7 +55,10 @@ const authController = {
     }
 
     // hasher le mot de passe
-    const hashedPassword = await bcrypt.hash(accountData.password, 10);
+    const hashedPassword = await bcrypt.hash(
+      accountData.password,
+      parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
+    );
     accountData.password = hashedPassword;
 
     // créer le compte en base
