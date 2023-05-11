@@ -46,6 +46,8 @@ const authController = {
 
   async register(req, res) {
     const accountData = req.body;
+    delete accountData.repeat_password;
+
     // vérifier si l'utilisateur existe déjà
     const existingUser = await account.findByEmail(accountData.email);
     if (existingUser) {
