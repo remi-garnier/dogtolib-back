@@ -6,6 +6,7 @@ const profilController = {
     let profile;
     if (req.userRole === 'O') {
       profile = await account.findByPk(req.userId);
+      delete profile.password;
     }
     res.json(profile);
   },
