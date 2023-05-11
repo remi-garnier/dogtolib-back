@@ -3,7 +3,10 @@ const { account } = require('../models/index.datamapper');
 const profilController = {
 
   async getProfil(req, res) {
-    const profile = await account.findByPk(1);
+    let profile;
+    if (req.userRole === 'O') {
+      profile = await account.findByPk(req.userId);
+    }
     res.json(profile);
   },
 
