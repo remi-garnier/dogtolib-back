@@ -9,7 +9,6 @@ module.exports = class Account extends CoreDatamapper {
       values: [email],
     };
     const result = await this.client.query(preparedQuery);
-
     if (!result.rows[0]) {
       return null;
     }

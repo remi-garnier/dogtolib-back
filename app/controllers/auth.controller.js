@@ -18,7 +18,6 @@ const authController = {
 
     // chercher l'utilisateur en base
     const user = await account.findByEmail(email);
-
     // Si il n'existe pas renvoyer une erreur
     if (!user) {
       debug(`user ${email} not found}`);
@@ -26,7 +25,7 @@ const authController = {
     }
     // vérifier le mot de passe
     const validPassword = await bcrypt.compare(password, user.password);
-
+    console.log(validPassword);
     // Si il est invalide renvoyer une erreur
     if (!validPassword) {
       debug(`user ${email} invalid password`);
