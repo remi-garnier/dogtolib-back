@@ -11,8 +11,7 @@ const animalController = {
    * @returns 201 l'animal créé
    */
   async createAnimal(req, res) {
-    const account_id = req.userId;
-    const newAnimal = await animal.create({ account_id, ...req.body });
+    const newAnimal = await animal.create({ account_id: req.userId, ...req.body });
     return res.status(201).json({ newAnimal });
   },
 

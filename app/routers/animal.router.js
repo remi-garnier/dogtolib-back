@@ -32,19 +32,19 @@ animalRouter.route('/:animalId(\\d+)')
    * @param {number} animalId - id de l'animal à retourner
    * @return {Animal} 200 - Animal
    */
-  .get(animalController.getAnimal)
+  .get(controllerWrapper(animalController.getAnimal))
   /**
    * PATCH /animal/{animalId}
    * @summary Met à jour un animal donné
    * @param {number} animalId - id de l'animal à mettre à jour
    * @return {Animal} 200 - Animal mis à jour
    */
-  .patch(animalController.updateAnimal)
+  .patch(controllerWrapper(animalController.updateAnimal))
   /**
    * DELETE /animal/{animalId}
    * @summary Supprime un animal donné
    * @param {number} animalId - id de l'animal à supprimer
    * @return 204
    */
-  .delete(animalController.deleteAnimal);
+  .delete(controllerWrapper(animalController.deleteAnimal));
 module.exports = animalRouter;
