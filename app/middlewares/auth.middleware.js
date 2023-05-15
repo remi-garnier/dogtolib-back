@@ -14,7 +14,7 @@ module.exports = {
     console.log(token);
 
     if (!token) {
-      throw new InvalidTokenError('No token provided, authorization denied');
+      throw new InvalidRoleError('No token provided, authorization denied');
     }
 
     try {
@@ -23,7 +23,7 @@ module.exports = {
       req.userRole = decodedToken.role;
       return next();
     } catch (err) {
-      throw new InvalidTokenError('Invalid token provided, authorization denied');
+      throw new InvalidRoleError('Invalid token provided, authorization denied');
     }
   },
 

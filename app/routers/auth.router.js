@@ -21,6 +21,7 @@ authRouter.post('/signin', validate(signinSchema, 'body'), controllerWrapper(aut
    * @summary Inscription d'un utilisateur
    * @param {string} body.email requis - email de l'utilisateur
    * @param {string} body.password requis - mot de passe de l'utilisateur
+   * @param {string} body.repeatpassword requis - confirmation mot de passe de l'utilisateur
    * @param {string} body.firstname requis - prénom de l'utilisateur
    * @param {string} body.lastname requis - nom de l'utilisateur
    * @param {string} body.address requis - adresse de l'utilisateur

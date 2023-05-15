@@ -95,8 +95,7 @@ module.exports = class CoreDatamapper {
     const preparedQuery = {
       text: `
         UPDATE "${this.tableName}" SET
-        ${fieldsAndPlaceholders},
-        updated_at = now()
+        ${fieldsAndPlaceholders}
         WHERE id = $${indexPlaceholder}
         RETURNING *
       `,

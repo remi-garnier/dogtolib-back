@@ -1,5 +1,8 @@
 const express = require('express');
 const animalController = require('../controllers/animal.controller');
+const controllerWrapper = require('../utils/controller-wrapper');
+const validate = require('../middlewares/validation.middleware');
+const createAnimalSchema = require('../validation/create-animal.validation');
 
 const animalRouter = express.Router();
 
@@ -9,7 +12,7 @@ animalRouter.route('/')
  * @summary retourne tous les animaux de l'utilisateur connecté
  * @ return {[Animal]]}
  * */
-  .get(animalController.getAnimals)
+  .get(controllerWrapper(animalController.getAnimals))
   /**
    * POST /animal
    * @summary Créer un animal pour l'utilisateur connecté
@@ -17,9 +20,10 @@ animalRouter.route('/')
    * @param {string} body.animal.birthdate requis - date de naissance de l'animal
    * @param {string} body.animal.species requis - espèce de l'animal
    * @param {string} body.animal.breed optionnel - race de l'animal
+   * @param {string} body.animal.memo optionnel - mémo sur l'animal
    * @return {Animal} 201 - Animal créé
    */
-  .post(animalController.createAnimal);
+  .post(validate(createAnimalSchema, 'body'), controllerWrapper(animalController.createAnimal));
 
 animalRouter.route('/:animalId(\\d+)')
   /**
