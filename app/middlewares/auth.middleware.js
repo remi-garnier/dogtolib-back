@@ -9,9 +9,7 @@ module.exports = {
    * @param {string} req.headers['x-auth-token'] requis - jwt token
    */
   checkToken(req, res, next) {
-    console.log('on passe token');
     const token = req.header('x-auth-token');
-    console.log(token);
 
     if (!token) {
       throw new InvalidRoleError('No token provided, authorization denied');
