@@ -15,7 +15,6 @@ const favoriteController = {
   async createFavorite(req, res) {
     // recuperer id utilisateur
     const { userId } = req;
-    console.log(`create = ${userId}`);
 
     const vetoId = parseInt(req.body.veterinary_id, 10);
 
@@ -37,7 +36,7 @@ const favoriteController = {
     // recuperer id
     const { userId } = req;
 
-    const veterinaryId = parseInt(req.params.veterinaryId, 10);
+    const veterinaryId = parseInt(req.body.veterinary_id, 10);
 
     // supprimer favoris
     const deleted = await favorite.delete(userId, veterinaryId);
