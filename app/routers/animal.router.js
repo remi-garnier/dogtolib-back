@@ -3,6 +3,7 @@ const animalController = require('../controllers/animal.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
 const validate = require('../middlewares/validation.middleware');
 const createAnimalSchema = require('../validation/create-animal.validation');
+const updateAnimalSchema = require('../validation/update-animal.validation');
 
 const animalRouter = express.Router();
 
@@ -39,7 +40,7 @@ animalRouter.route('/:animalId(\\d+)')
    * @param {number} animalId - id de l'animal à mettre à jour
    * @return {Animal} 200 - Animal mis à jour
    */
-  .patch(controllerWrapper(animalController.updateAnimal))
+  .patch(validate(updateAnimalSchema, 'body'), controllerWrapper(animalController.updateAnimal))
   /**
    * DELETE /animal/{animalId}
    * @summary Supprime un animal donné
