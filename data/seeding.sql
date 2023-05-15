@@ -30,10 +30,5 @@ INSERT INTO "reminder" ("label", "datetime", "animal_id")
 VALUES
   ('vaccin', '01/01/2024', 1),
   ('vaccin', '01/01/2025', 2);
-
-INSERT INTO "reminder" ("label", "datetime", "veterinary_id")
-VALUES
-  ('rendez-vous', '01/01/2024', 2),
-  ('rendez-vous', '01/01/2025', 3);
   
 COMMIT;

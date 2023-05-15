@@ -20,6 +20,11 @@ module.exports = (err, req, res, next) => {
     return res.status(503).json({ error: 'Database connection refused' });
   }
 
+  // Erreur favoris déjà existant
+  if (err.code === '23505' && err.table === 'account_has_favorite') {
+    return res.status(409).json({ error: 'Favorite already exists' });
+  }
+
   // Erreur route non trouvée
   if (err.cause === 404) {
     return res.status(404).json({ error: 'API Route not found' });
