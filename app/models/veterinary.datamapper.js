@@ -59,4 +59,33 @@ module.exports = class Veterinary extends CoreDatamapper {
     }
     return result.rows[0];
   }
+
+  async updateVeterinary({ id, ...inputData }) {
+    const fieldsAndPlaceholders = [];
+    let indexPlaceholder = 1;
+    const values = [];
+
+    Object.entries(inputData).forEach(([prop, value]) => {
+      fieldsAndPlaceholders.push(`"${prop}" = $${indexPlaceholder}`);
+      indexPlaceholder += 1;
+      values.push(value);
+    });
+
+    values.push(id);
+
+    const preparedQuery = {
+      text: `
+        UPDATE "${this.tableName}" SET
+        ${fieldsAndPlaceholders}
+        WHERE account_id = $${indexPlaceholder}
+        RETURNING *
+      `,
+      values,
+    };
+
+    const result = await this.client.query(preparedQuery);
+    const row = result.rows[0];
+
+    return row;
+  }
 };

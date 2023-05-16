@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { veterinary, account } = require('../models/index.datamapper');
 
 const veterinaryController = {
@@ -24,7 +25,7 @@ const veterinaryController = {
       ...(req.body?.email && { email: req.body.email }),
       ...(req.body?.password && { password: req.body.password }),
       ...(req.body?.phone_number && { phone_number: req.body.phone_number }),
-      ...(req.body?.adress && { adress: req.body.adress }),
+      ...(req.body?.address && { adress: req.body.address }),
       ...(req.body?.zip_code && { zip_code: req.body.zip_code }),
       ...(req.body?.city && { city: req.body.city }),
     };
@@ -36,7 +37,7 @@ const veterinaryController = {
 
     // Si le mot de passe est présent dans les données du compte
     // on le hashe
-    if (accountData.hasOwnProperty('password')) {
+    if ('password' in accountData) {
       accountData.password = await bcrypt.hash(
         accountData.password,
         parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
@@ -50,7 +51,7 @@ const veterinaryController = {
     }
 
     if (Object.keys(veterinaryData).length !== 0) {
-      updatedVeterinary = await veterinary.updateVeterinary({ userId, ...veterinaryData });
+      updatedVeterinary = await veterinary.updateVeterinary({ id: userId, ...veterinaryData });
     }
 
     return res.json({ ...updatedAccount, ...updatedVeterinary });

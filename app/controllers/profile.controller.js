@@ -22,7 +22,7 @@ const profileController = {
 
     // si le mot de passe est présent dans le body
     // on le hash et on supprime le repeat_password
-    if (inputData.hasOwnProperty('password')) {
+    if ('password' in inputData) {
       inputData.password = await bcrypt.hash(
         inputData.password,
         parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
