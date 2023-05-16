@@ -4,6 +4,7 @@ TRUNCATE TABLE "account_has_favorite", "account", "veterinary", "animal", "remin
 INSERT INTO "account" ("email", "firstname", "lastname", "phone_number", "password", "address", "zip_code", "city", "role")
 VALUES
   ('test@machin.fr', 'nicolas', 'Rochet', '0123456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 Boulevard de Belleville', '75000', 'Paris', 'O'),
+  ('test@test.fr', 'Rémi', 'Garnier', '0123456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 Boulevard de Belleville', '75000', 'Paris', 'O'),
   ('jean-louis@free.fr', 'jean-louis', 'Dupont', '0723456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 avenue de neuilly', '75000', 'Paris', 'V'),
   ('pierre.durant@orange.fr', 'pierre', 'Durant', '0623456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 boulevard lavillette', '75000', 'Paris', 'V'),
   ('paul.dupont@gmail.com', 'paul', 'Dupont', '0823456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 avenue des champs Elysées', '75000', 'Paris', 'V'),
