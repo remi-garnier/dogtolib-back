@@ -46,10 +46,10 @@ const reminderController = {
       if (!req.body?.animal_id) {
         return res.status(400).json({ error: 'animal_id is missing' });
       }
-      const currentAnimal = await animal.findByPk(req.body.animal_id);
+      const reminderAnimal = await animal.findByPk(req.body.animal_id);
       // On vérifie que l'animal concerné par le rappel
       // appartient bien à l'utilisateur connecté
-      if (currentAnimal.account_id !== req.userId) {
+      if (reminderAnimal.account_id !== req.userId) {
         return res.status(403).json({ error: 'you are not allowed to add a reminder to this animal' });
       }
 
@@ -59,11 +59,42 @@ const reminderController = {
   },
 
   async patchReminder(req, res) {
-    res.json({ reponse: 'update one reminder' });
+    const toPatchReminder = await reminder.findByPk(req.params.id);
+    // Cas du vétérinaire
+    if (req.userRole === 'V') {
+      if (toPatchReminder.veterinary_id !== req.veterinaryId) {
+        return res.status(403).json({ error: 'you are not allowed to update this reminder' });
+      }
+    }
+
+    // Cas du propriétaire d'animaux
+    if (req.userRole === 'O') {
+      const reminderAnimal = await animal.findByPk(toPatchReminder.animal_id);
+
+      if (reminderAnimal.account_id !== req.userId) {
+        return res.status(403).json({ error: 'you are not allowed to update this reminder' });
+      }
+    }
+    const patchedReminder = await reminder.update({ id: req.params.id, ...req.body });
+    return res.json({ reponse: patchedReminder });
   },
 
   async deleteReminder(req, res) {
-    res.json({ reponse: 'delete one reminder' });
+    const toDeleteReminder = await reminder.findByPk(req.params.id);
+    if (req.userRole === 'V') {
+      if (toDeleteReminder.veterinary_id !== req.veterinaryId) {
+        return res.status(403).json({ error: 'you are not allowed to delete this reminder' });
+      }
+    }
+
+    if (req.userRole === 'O') {
+      const reminderAnimal = await animal.findByPk(toDeleteReminder.animal_id);
+      if (reminderAnimal.account_id !== req.userId) {
+        return res.status(403).json({ error: 'you are not allowed to delete this reminder' });
+      }
+    }
+    await reminder.delete(req.params.id);
+    return res.status(204).json();
   },
 };
 
