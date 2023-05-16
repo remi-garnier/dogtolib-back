@@ -24,7 +24,7 @@ module.exports = class Reminder extends CoreDatamapper {
 
     const result = await this.client.query(preparedQuery);
 
-    if (result.rows.length === 0) {
+    if (result.rowCount === 0) {
       return null;
     }
     return result.rows;
@@ -51,9 +51,31 @@ module.exports = class Reminder extends CoreDatamapper {
     };
     const result = await this.client.query(preparedQuery);
 
-    if (result.rows.length === 0) {
+    if (result.rowCount === 0) {
       return null;
     }
+    return result.rows;
+  }
+
+  async findAnimalReminders(animalId) {
+    const preparedQuery = {
+      text: `SELECT 
+      reminder.id as id,
+      reminder.animal_id as animal_id,
+      reminder.label as label,
+      reminder.datetime as datetime,
+      animal.account_id as account_id
+      FROM ${this.tableName}
+      JOIN animal ON animal.id = reminder.animal_id
+      WHERE ${this.tableName}.animal_id = $1`,
+      values: [animalId],
+    };
+    const result = await this.client.query(preparedQuery);
+
+    if (result.rowCount === 0) {
+      return null;
+    }
+
     return result.rows;
   }
 };

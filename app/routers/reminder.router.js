@@ -12,11 +12,14 @@ reminderRouter.route('/')
   .get(controllerWrapper(reminderControler.getReminders))
 /**
  * POST /reminder
- * @ ajoute un rappel
+ * @summary ajoute un rappel
+ * @param {number} body.animal_id optionnel id de l'animal concerné
+ * @param {string} body.label obligatoire contenu du rappel
+ * @param {string} body.datetime  obligatoire date et heure du rappel
  */
-  .post(controllerWrapper(reminderControler.postAddReminder));
+  .post(controllerWrapper(reminderControler.addReminder));
 
-reminderRouter.route('/animal/:id')
+reminderRouter.route('/animal/:id(\\d+)')
 /**
  * @summary Renvoi les rappels propres à un animal donné
  */

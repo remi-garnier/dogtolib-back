@@ -25,7 +25,6 @@ const authController = {
     }
     // vérifier le mot de passe
     const validPassword = await bcrypt.compare(password, user.password);
-    console.log(validPassword);
     // Si il est invalide renvoyer une erreur
     if (!validPassword) {
       debug(`user ${email} invalid password`);
@@ -38,6 +37,7 @@ const authController = {
       firstname: user.firstname,
       lastname: user.lastname,
       role: user.role,
+      ...(user.role === 'V' && { veterinaryId: user.veterinary_id }),
     }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_DURATION });
 
     return res.json({ token });

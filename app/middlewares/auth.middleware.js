@@ -19,6 +19,10 @@ module.exports = {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       req.userId = decodedToken.id;
       req.userRole = decodedToken.role;
+      if (decodedToken.veterinaryId) {
+        req.veterinaryId = decodedToken.veterinaryId;
+      }
+
       return next();
     } catch (err) {
       throw new InvalidRoleError('Invalid token provided, authorization denied');
@@ -26,7 +30,7 @@ module.exports = {
   },
 
   /**
-   * @summary vérifie si le role de l'utilsateur est "Veterinary" (V)
+   * @summary vérifie si le role de l'utilisateur est "Veterinary" (V)
    */
   isVeterinary(req, res, next) {
     if (req.userRole !== 'V') {
