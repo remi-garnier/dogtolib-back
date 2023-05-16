@@ -1,6 +1,9 @@
 const express = require('express');
 const reminderControler = require('../controllers/reminder.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
+const validate = require('../middlewares/validation.middleware');
+const addReminderSchema = require('../validation/add-reminder.validation');
+const updateReminderSchema = require('../validation/update-reminder.validation');
 
 const reminderRouter = express.Router();
 
@@ -17,7 +20,7 @@ reminderRouter.route('/')
  * @param {string} body.label obligatoire contenu du rappel
  * @param {string} body.datetime  obligatoire date et heure du rappel
  */
-  .post(controllerWrapper(reminderControler.addReminder));
+  .post(validate(addReminderSchema, 'body'), controllerWrapper(reminderControler.addReminder));
 
 reminderRouter.route('/animal/:id(\\d+)')
 /**
@@ -26,7 +29,13 @@ reminderRouter.route('/animal/:id(\\d+)')
   .get(controllerWrapper(reminderControler.getAnimalReminders));
 
 reminderRouter.route('/:id(\\d+)')
-  .patch(controllerWrapper(reminderControler.patchReminder))
+/**
+ * PATCH /reminder
+ * @summary ajoute un rappel
+ * @param {string} body.label optionnel contenu du rappel
+ * @param {string} body.datetime  optionnel date et heure du rappel
+ */
+  .patch(validate(updateReminderSchema, 'body'), controllerWrapper(reminderControler.patchReminder))
   .delete(controllerWrapper(reminderControler.deleteReminder));
 
 module.exports = reminderRouter;
