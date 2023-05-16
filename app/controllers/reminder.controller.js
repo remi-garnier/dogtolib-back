@@ -1,7 +1,23 @@
+const { reminder } = require('../models/index.datamapper');
+
 const reminderController = {
 
-  async getReminder(req, res) {
-    res.json({ reponse: 'reminder animals from user' });
+  async getReminders(req, res) {
+    let reminders;
+
+    // Si vétérinaraire
+    if (req.userRole === 'V') {
+      reminders = await reminder.findVeterinaryRemindersByAccountId(req.userId);
+    // si propiétaire d'animaux
+    } else if (req.userRole === 'O') {
+      reminders = await reminder.findAnimalsRemindersByAccountId(req.userId);
+    }
+
+    if (!reminders) {
+      return res.status(404).json({ error: 'no reminders found' });
+    }
+
+    return res.json({ reminders });
   },
 
   async getVetReminder(req, res) {

@@ -29,6 +29,14 @@ VALUES
 INSERT INTO "reminder" ("label", "datetime", "animal_id")
 VALUES
   ('vaccin', '01/01/2024', 1),
-  ('vaccin', '01/01/2025', 2);
+  ('vaccin', '01/01/2025', 2),
+  ('antipuce', '01/01/2022', 2),
+  ('vaccin encore', '16/05/2023 00:00:00.000Z', 1);
   
+INSERT INTO "reminder" ("label", "datetime", "veterinary_id")
+VALUES
+  ('faire des trucs de veto', '01/01/2024', 1),
+  ('aller chercher le pain', '01/01/2025', 1),
+  ('stock croquette', '01/01/2022', 1),
+  ('traitement anti-puce', '16/05/2023 00:00:00.000Z', 1);
 COMMIT;

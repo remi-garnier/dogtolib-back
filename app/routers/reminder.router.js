@@ -1,30 +1,29 @@
 const express = require('express');
 const reminderControler = require('../controllers/reminder.controller');
+const controllerWrapper = require('../utils/controller-wrapper');
 
 const reminderRouter = express.Router();
 
 reminderRouter.route('/')
 /**
- * GET /profil
- * @summary Renvoi les rappels des animaux de l’utilisateur connecté
- */
-  .get(reminderControler.getReminder)
-  .post(reminderControler.postAddReminder);
-
-reminderRouter.route('/vet')
+  * GET /reminder
+  * @summary Renvoi les rappels de l’utilisateur connecté
+  */
+  .get(controllerWrapper(reminderControler.getReminders))
 /**
- * @summary Renvoi les rappels du vétérinaire connecté
+ * POST /reminder
+ * @ ajoute un rappel
  */
-  .get(reminderControler.getVetReminder);
+  .post(controllerWrapper(reminderControler.postAddReminder));
 
 reminderRouter.route('/animal/:id')
 /**
  * @summary Renvoi les rappels propres à un animal donné
  */
-  .get(reminderControler.getAnimalReminders);
+  .get(controllerWrapper(reminderControler.getAnimalReminders));
 
 reminderRouter.route('/:id(\\d+)')
-  .patch(reminderControler.patchReminder)
-  .delete(reminderControler.deleteReminder);
+  .patch(controllerWrapper(reminderControler.patchReminder))
+  .delete(controllerWrapper(reminderControler.deleteReminder));
 
 module.exports = reminderRouter;
