@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const debug = require('debug')('app:authController');
+const { hashedPassword, checkPassword, hashPassword } = require('../utils/password');
 const InvalidCredentialError = require('../errors/invalid-credentials.error');
 const UsedMailError = require('../errors/used-mail.error');
 
@@ -24,7 +24,7 @@ const authController = {
       throw new InvalidCredentialError('Unable to login with credentials provided');
     }
     // vérifier le mot de passe
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await checkPassword(password, user.password);
     // Si il est invalide renvoyer une erreur
     if (!validPassword) {
       debug(`user ${email} invalid password`);
@@ -54,11 +54,7 @@ const authController = {
     }
 
     // hasher le mot de passe
-    const hashedPassword = await bcrypt.hash(
-      accountData.password,
-      parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
-    );
-    accountData.password = hashedPassword;
+    accountData.password = await hashPassword(accountData.password);
 
     // créer le compte en base
     const newAccount = await account.create(accountData);

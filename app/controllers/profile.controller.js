@@ -1,6 +1,7 @@
-const bcrypt = require('bcrypt');
 const { account, veterinary } = require('../models/index.datamapper');
 const buildParamObject = require('../utils/build-param-object');
+const { hashPassword } = require('../utils/password');
+
 const debug = require('debug')('app:profileController');
 
 const profileController = {
@@ -47,13 +48,11 @@ const profileController = {
     ];
     // Données du compte à mettre à jour
     const accountData = buildParamObject(accountFields, inputData);
+
     // si le mot de passe est présent dans le body
     // on le hash et on supprime le repeat_password
     if ('password' in accountData) {
-      accountData.password = await bcrypt.hash(
-        accountData.password,
-        parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
-      );
+      accountData.password = await hashPassword(accountData.password);
       delete accountData.repeat_password;
     }
 
