@@ -5,10 +5,10 @@ const reminderController = {
   async getReminders(req, res) {
     let reminders;
 
-    // Si vétérinaraire
+    // Cas du vétérinaire
     if (req.userRole === 'V') {
       reminders = await reminder.findVeterinaryRemindersByAccountId(req.userId);
-    // si propiétaire d'animaux
+    // Cas du propriétaire d'animaux
     } else if (req.userRole === 'O') {
       reminders = await reminder.findAnimalsRemindersByAccountId(req.userId);
     }

@@ -12,6 +12,7 @@ module.exports = class Reminder extends CoreDatamapper {
       text: `SELECT 
         reminder.id as id,
         reminder.veterinary_id as veterinary_id,
+        reminder.title as title,
         reminder.label as label,
         reminder.datetime as datetime
       FROM ${this.tableName}
@@ -39,6 +40,7 @@ module.exports = class Reminder extends CoreDatamapper {
       text: `SELECT
         reminder.id as id,
         reminder.animal_id as animal_id,
+        reminder.title as title,
         reminder.label as label,
         reminder.datetime as datetime,
         animal.name as animal_name
@@ -62,6 +64,7 @@ module.exports = class Reminder extends CoreDatamapper {
       text: `SELECT 
       reminder.id as id,
       reminder.animal_id as animal_id,
+      reminder.title as title,
       reminder.label as label,
       reminder.datetime as datetime,
       animal.account_id as account_id

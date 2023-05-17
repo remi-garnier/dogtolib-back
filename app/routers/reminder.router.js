@@ -10,7 +10,9 @@ const reminderRouter = express.Router();
 reminderRouter.route('/')
 /**
   * GET /reminder
+  * @typedef {object} reminder
   * @summary Renvoi les rappels de l’utilisateur connecté
+  * @return {[reminder]} 200 - Un tableau de rappels
   */
   .get(controllerWrapper(reminderControler.getReminders))
 /**

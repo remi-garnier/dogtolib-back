@@ -1,4 +1,4 @@
--- Verify dogtolib:seeding on pg
+-- Verify dogtolib:2.add_title_field on pg
 
 BEGIN;
 
