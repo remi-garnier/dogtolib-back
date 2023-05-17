@@ -55,7 +55,7 @@ const reminderController = {
 
       newReminder = await reminder.create({ ...req.body });
     }
-    return res.json({ newReminder });
+    return res.status(201).json({ newReminder });
   },
 
   async patchReminder(req, res) {
