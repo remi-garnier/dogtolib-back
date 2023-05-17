@@ -21,9 +21,8 @@ const profileController = {
     }
 
     if (!profile) {
-      return res.status(404).json({ error: 'veterinary not found' });
+      return res.status(404).json({ error: 'User not found' });
     }
-
     return res.json(profile);
   },
 
