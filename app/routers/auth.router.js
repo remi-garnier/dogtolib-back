@@ -9,15 +9,20 @@ const authRouter = express.Router();
 
 /**
    * POST /auth/signin
+   * @typedef {String} JWT
+   * @tags Authentification
    * @summary Connexion d'un utilisateur
-   * @param {string} body.email requis - email de l'utilisateur
-   * @param {string} body.password requis - mot de passe de l'utilisateur
-   * @returns JWT 200 - Token d'authentification
+   * @param {string} body.email.required email de l'utilisateur
+   * @param {string} body.password.required mot de passe de l'utilisateur
+   * @return {JWT} 200 - Token d'authentification
+   * @return {string} 401 - Identifiants invalides
    */
 authRouter.post('/signin', validate(signinSchema, 'body'), controllerWrapper(authController.signin));
 
 /**
    * POST /auth/register
+   * @typedef {Object} account
+   * @tags Authentification
    * @summary Inscription d'un utilisateur
    * @param {string} body.email requis - email de l'utilisateur
    * @param {string} body.password requis - mot de passe de l'utilisateur
@@ -29,6 +34,9 @@ authRouter.post('/signin', validate(signinSchema, 'body'), controllerWrapper(aut
    * @param {string} body.zipcode requis - code postal de l'utilisateur
    * @param {string} body.role requis - rôle de l'utilisateur (vétérinaire ou propriétaire)
    * @param {string} body.phone optionnel - téléphone de l'utilisateur
+   * @return {account} 200 - Compte utilisateur créé
+   * @return {object} 400 - Erreur de validation
+   * @return {object} 400 - Un utilisateur avec cet email existe déjà
    */
 authRouter.post('/register', validate(registerSchema, 'body'), controllerWrapper(authController.register));
 
