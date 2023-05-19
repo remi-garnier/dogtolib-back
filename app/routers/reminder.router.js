@@ -42,7 +42,7 @@ reminderRouter.route('/:id(\\d+)')
 /**
  * PATCH /reminder/{id}
  * @tags Reminder
- * @summary ajoute un rappel
+ * @summary Met à jour un rappel
  * @param {string} body.label optionnel contenu du rappel
  * @param {string} body.title optionnel titre du rappel
  * @param {string} body.datetime  optionnel date et heure du rappel

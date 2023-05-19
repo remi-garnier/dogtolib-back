@@ -9,22 +9,30 @@ const favoriteRouter = express.Router();
 favoriteRouter.route('/')
   /**
    * GET /favorite
+   * @tags Favorite
    * @summary Renvoi les vétérinaires favoris de l'utilisateur connecté
-   * @return {[Account]}
+   * @return {[Account]} 200 - Profil des vétérinaires favoris
    */
   .get(controllerWrapper(favoriteController.getFavorite))
   /**
    * POST /favorite
+   * @tags Favorite
    * @summary Créer un vétérinaire favoris pour l'utilisateur connecté
-   * @param {string} body.veterinaryId requis - id du vétérinaire
-   * @return 201 - Vétérinaire créé
+   * @param {string} body.veterinary_id.required - id du vétérinaire à ajouter en favoris
+   * @return {account} 201 - profil du vétérinaire ajouté en favoris
+   * @return {string} 404 - Le vétérinaire n'existe pas
+   * @return {string} 400 - Erreur de validation des données en entrée
    */
   .post(validate(favoriteSchema, 'body'), controllerWrapper(favoriteController.createFavorite))
 
   /**
-  * DELETE /favorite/{veterinaryId}
+  * DELETE /favorite
+  * @tags Favorite
   * @summary Supprime un vétérinaire favoris pour l'utilisateur connecté
-  * @param {string} body.veterinaryId requis - id du vétérinaire
+  * @param {string} body.veterinary_id requis - id du vétérinaire à retirer des favoris
+  * @return 204 - Le vétérinaire a bien été supprimé des favoris
+  * @return {string} 404 - Le vétérinaire n'est pas dans les favoris
+  * @return {string} 400 - Erreur de validation des données en entrée
   */
   .delete(validate(favoriteSchema, 'body'), controllerWrapper(favoriteController.deleteFavorite));
 

@@ -9,7 +9,7 @@ const favoriteController = {
     // recuperer les favoris de l'utilisateur
     const favorites = await favorite.findByAccount(userId);
 
-    res.json({ favorites });
+    return res.json({ favorites });
   },
 
   async createFavorite(req, res) {
@@ -23,13 +23,18 @@ const favoriteController = {
       veterinary_id: vetoId,
     };
 
-    // creer favoris
-    const newFavorite = await favorite.create(addingFavorite);
-
-    // Récupérer les données du vétérinaire ajouté en favoris et les renvoyer
+    // Récupérer les données du vétérinaire à ajouter en favoris
     const newFavoriteProfile = await veterinary
-      .findVeterinaryProfileById(newFavorite.veterinary_id);
-    res.status(201).json({ newFavoriteProfile });
+      .findVeterinaryProfileById(vetoId);
+
+    // Si le vétérinaire n'existe pas, on renvoie une erreur
+    if (!newFavoriteProfile) {
+      return res.status(404).json({ error: 'veterinary not found' });
+    }
+
+    // creer favoris et renvoyer les infos du vétérinaire correspondant
+    await favorite.create(addingFavorite);
+    return res.status(201).json({ newFavoriteProfile });
   },
 
   async deleteFavorite(req, res) {
