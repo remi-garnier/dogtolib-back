@@ -98,6 +98,7 @@ module.exports = class Veterinary extends CoreDatamapper {
             account.phone_number AS phone_number,
             account.address AS address,
             account.city AS city,
+            regexp_replace(account.city, '-', ' ', 'g') AS formatted_city,
             account.zip_code AS zip_code,
             ${this.tableName}.id AS veterinary_id,
             ${this.tableName}.payment_modes AS payment_modes,
@@ -107,23 +108,23 @@ module.exports = class Veterinary extends CoreDatamapper {
             JOIN account ON account.id = ${this.tableName}.account_id
             WHERE 
             CASE 
-              WHEN $1 = '' THEN account.city ILIKE '%' || $2 || '%'
+              WHEN $1 = '' THEN regexp_replace(account.city, '-', ' ', 'g') ILIKE '%' || $2 || '%'
               WHEN $2 = '' THEN account.lastname ILIKE '%' || $1 || '%'
-              ELSE account.lastname ILIKE '%' || $1 || '%' OR account.city ILIKE '%' || $2 || '%'
+              ELSE account.lastname ILIKE '%' || $1 || '%' OR regexp_replace(account.city, '-', ' ', 'g') ILIKE '%' || $2 || '%'
             END
             ORDER BY
               CASE
-                WHEN account.city ILIKE $2 AND account.lastname ILIKE $1 THEN 1
-                WHEN account.city ILIKE $2 AND (account.lastname ILIKE $1 || '%' OR account.lastname ILIKE '%' || $1) OR
-                account.lastname ILIKE $1 AND (account.city ILIKE $2 || '%' OR account.city ILIKE '%' || $1) THEN 2
-                WHEN account.city ILIKE $2 OR account.lastname ILIKE $1 THEN 3
-                WHEN account.city ILIKE $2 || '%' AND account.lastname ILIKE $1 || '%' THEN 4
-                WHEN account.city ILIKE $2 || '%' OR account.lastname ILIKE $1 || '%' THEN 5
-                WHEN account.city ILIKE '%' || $2 AND account.lastname ILIKE '%' || $1 THEN 6
-                WHEN account.city ILIKE '%' || $2 OR account.lastname ILIKE '%' || $1  THEN 7
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE $2 AND account.lastname ILIKE $1 THEN 1
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE $2 AND (account.lastname ILIKE $1 || '%' OR account.lastname ILIKE '%' || $1) OR
+                account.lastname ILIKE $1 AND (regexp_replace(account.city, '-', ' ', 'g') ILIKE $2 || '%' OR regexp_replace(account.city, '-', ' ', 'g') ILIKE '%' || $1) THEN 2
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE $2 OR account.lastname ILIKE $1 THEN 3
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE $2 || '%' AND account.lastname ILIKE $1 || '%' THEN 4
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE $2 || '%' OR account.lastname ILIKE $1 || '%' THEN 5
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE '%' || $2 AND account.lastname ILIKE '%' || $1 THEN 6
+                WHEN regexp_replace(account.city, '-', ' ', 'g') ILIKE '%' || $2 OR account.lastname ILIKE '%' || $1  THEN 7
                 ELSE 8
                 END,
-              account.city,
+              formatted_city,
               account.lastname;`,
       values: [lastname, city],
     };
