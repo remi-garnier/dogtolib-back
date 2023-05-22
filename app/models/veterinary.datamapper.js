@@ -88,4 +88,52 @@ module.exports = class Veterinary extends CoreDatamapper {
 
     return row;
   }
+
+  async searchVeterinary(lastname, city) {
+    const preparedQuery = {
+      text: `SELECT
+            account.lastname AS lastname,
+            account.firstname AS firstname,
+            account.email AS email,
+            account.phone_number AS phone_number,
+            account.address AS address,
+            account.city AS city,
+            account.zip_code AS zip_code,
+            ${this.tableName}.id AS veterinary_id,
+            ${this.tableName}.payment_modes AS payment_modes,
+            ${this.tableName}.opening_hour AS opening_hour,
+            ${this.tableName}.closing_hour AS closing_hour
+            FROM ${this.tableName}
+            JOIN account ON account.id = ${this.tableName}.account_id
+            WHERE 
+            CASE 
+              WHEN $1 = '' THEN account.city ILIKE '%' || $2 || '%'
+              WHEN $2 = '' THEN account.lastname ILIKE '%' || $1 || '%'
+              ELSE account.lastname ILIKE '%' || $1 || '%' OR account.city ILIKE '%' || $2 || '%'
+            END
+            ORDER BY
+              CASE
+                WHEN account.city ILIKE $2 AND account.lastname ILIKE $1 THEN 1
+                WHEN account.city ILIKE $2 AND (account.lastname ILIKE $1 || '%' OR account.lastname ILIKE '%' || $1) OR
+                account.lastname ILIKE $1 AND (account.city ILIKE $2 || '%' OR account.city ILIKE '%' || $1) THEN 2
+                WHEN account.city ILIKE $2 OR account.lastname ILIKE $1 THEN 3
+                WHEN account.city ILIKE $2 || '%' AND account.lastname ILIKE $1 || '%' THEN 4
+                WHEN account.city ILIKE $2 || '%' OR account.lastname ILIKE $1 || '%' THEN 5
+                WHEN account.city ILIKE '%' || $2 AND account.lastname ILIKE '%' || $1 THEN 6
+                WHEN account.city ILIKE '%' || $2 OR account.lastname ILIKE '%' || $1  THEN 7
+                ELSE 8
+                END,
+              account.city,
+              account.lastname;`,
+      values: [lastname, city],
+    };
+
+    const searchResult = await this.client.query(preparedQuery);
+
+    if (searchResult.rowCount === 0) {
+      return null;
+    }
+
+    return searchResult.rows;
+  }
 };

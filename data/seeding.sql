@@ -3,7 +3,7 @@ TRUNCATE TABLE "account_has_favorite", "account", "veterinary", "animal", "remin
 
 INSERT INTO "account" ("email", "firstname", "lastname", "phone_number", "password", "address", "zip_code", "city", "role")
 VALUES
-  ('test@machin.fr', 'nicolas', 'Rochet', '0123456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 Boulevard de Belleville', '75000', 'Paris', 'O'),
+  ('test@machin.fr', 'Nicolas', 'Rochet', '0123456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 Boulevard de Belleville', '75000', 'Paris', 'O'),
   ('test@test.fr', 'Rémi', 'Garnier', '0123456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 Boulevard de Belleville', '75000', 'Paris', 'O'),
   ('jean-louis@free.fr', 'jean-louis', 'Dupont', '0723456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 avenue de neuilly', '75000', 'Paris', 'V'),
   ('pierre.durant@orange.fr', 'pierre', 'Durant', '0623456789', '$2b$10$NW8QoaLybPfVjJ5Q5zDJ/ucqL8WZEiMQZoVvl8OSXU5OHF3CxWEqK', '1 boulevard lavillette', '75000', 'Paris', 'V'),
@@ -12,15 +12,17 @@ VALUES
 
 INSERT INTO "veterinary" ("payment_modes", "opening_hour", "closing_hour", "account_id")
 VALUES
-  ('CB', '09:00', '18:00', 2),
-  ('CB', '10:00', '17:00', 3),
-  ('CB', '11:00', '19:00', 4),
-  ('CASH', '09:30', '18:30', 5);
+  ('CB', '09:00', '18:00', 3),
+  ('CB', '10:00', '17:00', 4),
+  ('CB', '11:00', '19:00', 5),
+  ('CASH', '09:30', '18:30', 6);
 
 INSERT INTO "animal" ("name", "birthdate", "specie", "breed", "memo", "account_id")
 VALUES
-  ('kiki', '01/01/1998', 'chien', 'labrador', 'chien très gentil', 1),
-  ('rex', '02/03/2012', 'chien', 'caniche', '', 1);
+  ('Kiki', '01/01/1998', 'chien', 'labrador', 'chien très gentil', 1),
+  ('Rex', '02/03/2012', 'chien', 'caniche', '', 1),
+  ('Croquette', '01/01/1998', 'chat', 'siamois', '', 1),
+  ('Denver', '02/03/2012', 'autre', 'gecko', '', 1);
 
 INSERT INTO "account_has_favorite" ("account_id", "veterinary_id")
 VALUES
