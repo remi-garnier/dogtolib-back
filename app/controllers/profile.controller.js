@@ -21,7 +21,7 @@ const profileController = {
     }
 
     if (!profile) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ profile: null });
     }
     return res.json(profile);
   },

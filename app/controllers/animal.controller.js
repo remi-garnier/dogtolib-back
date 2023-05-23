@@ -1,4 +1,5 @@
 const { animal } = require('../models/index.datamapper');
+const DogtolibError = require('../errors/dogtolib-error');
 
 const animalController = {
   async getAnimals(req, res) {
@@ -29,7 +30,7 @@ const animalController = {
     }
     // Si l'utilisateur n'est ni le proriétaire de l'animal ni vétérinaire
     if (animalData.account_id !== req.userId && req.userRole !== 'V') {
-      return res.status(403).json({ error: 'Forbidden' });
+      throw new DogtolibError('Forbidden', 403);
     }
 
     return res.json({ animal: animalData });
@@ -45,12 +46,12 @@ const animalController = {
 
     // vérifier que l'animal existe
     if (!toUpdate) {
-      return res.status(404).json({ error: 'Animal not found' });
+      return res.status(404).json({ animal: null });
     }
 
     // vérifier que l'utilisateur est propriétaire de l'animal
     if (toUpdate.account_id !== req.userId) {
-      return res.status(403).json({ error: 'Forbidden' });
+      throw new DogtolibError('Forbidden', 403);
     }
     // Mettre à jour l'animal
     const updatedAnimal = await animal.update({ id: animalId, ...req.body });
@@ -68,12 +69,12 @@ const animalController = {
 
     // vérifier que l'animal existe
     if (!toDelete) {
-      return res.status(404).json({ error: 'Animal not found' });
+      return res.status(404).json({ animal: null });
     }
 
     // vérifier que l'utilisateur est propriétaire de l'animal
     if (toDelete.account_id !== req.userId) {
-      return res.status(403).json({ error: 'Forbidden' });
+      throw new DogtolibError('Forbidden', 403);
     }
 
     // Supprimer l'animal

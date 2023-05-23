@@ -22,11 +22,6 @@ module.exports = (err, req, res, next) => {
     return res.status(409).json({ error: 'Favorite already exists' });
   }
 
-  // Erreur route non trouvée
-  if (err.cause === 404) {
-    return res.status(404).json({ error: 'API Route not found' });
-  }
-
   // Par défaut
   return res.status(500).json({
     error: err,

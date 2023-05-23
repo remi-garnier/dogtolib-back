@@ -24,7 +24,7 @@ reminderRouter.route('/')
  * @param {string} body.label.required - contenu du rappel
  * @param {string} body.title.required - titre du rappel
  * @param {string} body.datetime.required - date et heure du rappel
- * @return {reminder} 201 - Le rappel créé
+ * @return {reminder} 201 - reminder: Le rappel créé
  * @return {object} 400 - erreur de validation des données en entrée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour créer un rappel sur cet animal
  */

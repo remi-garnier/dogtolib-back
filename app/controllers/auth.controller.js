@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 const debug = require('debug')('app:authController');
-const { hashedPassword, checkPassword, hashPassword } = require('../utils/password');
-const InvalidCredentialError = require('../errors/invalid-credentials.error');
-const UsedMailError = require('../errors/used-mail.error');
+const { checkPassword, hashPassword } = require('../utils/password');
+const DogtolibError = require('../errors/dogtolib-error');
+// const InvalidCredentialError = require('../errors/invalid-credentials.error');
+// const UsedMailError = require('../errors/used-mail.error');
 
 const { account, veterinary } = require('../models/index.datamapper');
 
@@ -21,14 +22,14 @@ const authController = {
     // Si il n'existe pas renvoyer une erreur
     if (!user) {
       debug(`user ${email} not found}`);
-      throw new InvalidCredentialError('Unable to login with credentials provided');
+      throw new DogtolibError('Unable to login with credentials provided', 401);
     }
     // vérifier le mot de passe
     const validPassword = await checkPassword(password, user.password);
     // Si il est invalide renvoyer une erreur
     if (!validPassword) {
       debug(`user ${email} invalid password`);
-      throw new InvalidCredentialError('Unable to login with credentials provided');
+      throw new DogtolibError('Unable to login with credentials provided', 401);
     }
     // générer et renvoyer un token jwt
     const token = jwt.sign({
@@ -50,7 +51,7 @@ const authController = {
     // vérifier si l'utilisateur existe déjà
     const existingUser = await account.findByEmail(accountData.email);
     if (existingUser) {
-      throw new UsedMailError('User with this email already exists');
+      throw new DogtolibError('User with this email already exists', 400);
     }
 
     // hasher le mot de passe

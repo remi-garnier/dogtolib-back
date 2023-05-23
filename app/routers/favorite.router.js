@@ -19,7 +19,7 @@ favoriteRouter.route('/')
    * @tags Favorite
    * @summary Créer un vétérinaire favoris pour l'utilisateur connecté
    * @param {string} body.veterinary_id.required - id du vétérinaire à ajouter en favoris
-   * @return {account} 201 - profil du vétérinaire ajouté en favoris
+   * @return {account} 201 - favorite: profil du vétérinaire ajouté en favoris
    * @return {string} 404 - Le vétérinaire n'existe pas
    * @return {string} 400 - Erreur de validation des données en entrée
    */

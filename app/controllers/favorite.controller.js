@@ -29,12 +29,12 @@ const favoriteController = {
 
     // Si le vétérinaire n'existe pas, on renvoie une erreur
     if (!newFavoriteProfile) {
-      return res.status(404).json({ error: 'veterinary not found' });
+      return res.status(404).json({ favorite: null });
     }
 
     // creer favoris et renvoyer les infos du vétérinaire correspondant
     await favorite.create(addingFavorite);
-    return res.status(201).json({ newFavoriteProfile });
+    return res.status(201).json({ favorite: newFavoriteProfile });
   },
 
   async deleteFavorite(req, res) {
@@ -47,7 +47,7 @@ const favoriteController = {
     const deleted = await favorite.delete(userId, veterinaryId);
 
     if (!deleted) {
-      return res.status(404).json({ error: 'favorite not found' });
+      return res.status(404).json({ favorite: null });
     }
     return res.status(204).json();
   },
