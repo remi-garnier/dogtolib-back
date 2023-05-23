@@ -4,10 +4,7 @@ module.exports = (err, req, res, next) => {
   debug(err);
 
   // Erreurs personnalisées
-  if (err.code === 'INVALID_CREDENTIALS'
-    || err.code === 'INVALID_TOKEN'
-    || err.code === 'INVALID_ROLE'
-    || err.code === 'USED_MAIL') {
+  if (err.name === 'DogtolibError') {
     return res.status(err.status).json({ error: err.message });
   }
 

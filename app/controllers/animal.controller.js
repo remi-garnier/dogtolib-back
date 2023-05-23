@@ -17,22 +17,22 @@ const animalController = {
 
   /**
    *
-   * @ summary Renvoi les infos d'un animal donné
+   * @summary Renvoi les infos d'un animal donné
    * @returns {Animal} 200 - Animal
    */
   async getAnimal(req, res) {
     const { animalId } = req.params;
     const animalData = await animal.findByPk(animalId);
     // Si l'animal n'existe pas
-    if (!animal) {
-      return res.status(404).json({ error: 'Not found' });
+    if (!animalData) {
+      return res.status(404).json({ animal: null });
     }
     // Si l'utilisateur n'est ni le proriétaire de l'animal ni vétérinaire
     if (animalData.account_id !== req.userId && req.userRole !== 'V') {
       return res.status(403).json({ error: 'Forbidden' });
     }
 
-    return res.json({ animalData });
+    return res.json({ animal: animalData });
   },
 
   /**
@@ -56,7 +56,7 @@ const animalController = {
     const updatedAnimal = await animal.update({ id: animalId, ...req.body });
 
     // Renvoyer 200 avec les nouvelles données
-    return res.json({ response: updatedAnimal });
+    return res.json({ animal: updatedAnimal });
   },
 
   /**

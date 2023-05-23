@@ -25,10 +25,6 @@ module.exports = class Favorite extends CoreDatamapper {
     };
     const result = await this.client.query(preparedQuery);
 
-    if (result.rowCount === 0) {
-      return null;
-    }
-
     return result.rows;
   }
 

@@ -13,19 +13,12 @@ const reminderController = {
       reminders = await reminder.findAnimalsRemindersByAccountId(req.userId);
     }
 
-    if (!reminders) {
-      return res.status(404).json({ error: 'no reminders found' });
-    }
-
     return res.json({ reminders });
   },
 
   async getAnimalReminders(req, res) {
     const { id } = req.params;
     const reminders = await reminder.findAnimalReminders(id);
-    if (!reminders) {
-      return res.status(404).json({ error: 'no reminders found' });
-    }
     if (reminders[0].account_id !== req.userId) {
       return res.status(403).json({ error: 'you are not allowed to see this animal reminders' });
     }

@@ -11,7 +11,7 @@ favoriteRouter.route('/')
    * GET /favorite
    * @tags Favorite
    * @summary Renvoi les vétérinaires favoris de l'utilisateur connecté
-   * @return {[Account]} 200 - Profil des vétérinaires favoris
+   * @return {[Account]} 200 - favorites tableau: profil des vétérinaires favoris
    */
   .get(controllerWrapper(favoriteController.getFavorite))
   /**

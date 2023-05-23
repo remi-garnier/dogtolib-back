@@ -25,9 +25,6 @@ module.exports = class Reminder extends CoreDatamapper {
 
     const result = await this.client.query(preparedQuery);
 
-    if (result.rowCount === 0) {
-      return null;
-    }
     return result.rows;
   }
 
@@ -53,9 +50,6 @@ module.exports = class Reminder extends CoreDatamapper {
     };
     const result = await this.client.query(preparedQuery);
 
-    if (result.rowCount === 0) {
-      return null;
-    }
     return result.rows;
   }
 
@@ -74,10 +68,6 @@ module.exports = class Reminder extends CoreDatamapper {
       values: [animalId],
     };
     const result = await this.client.query(preparedQuery);
-
-    if (result.rowCount === 0) {
-      return null;
-    }
 
     return result.rows;
   }

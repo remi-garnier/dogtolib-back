@@ -6,6 +6,7 @@ const reminderRouter = require('./reminder.router');
 const veterinaryRouter = require('./veterinary.router');
 const favoriteRouter = require('./favorite.router');
 const authMiddleware = require('../middlewares/auth.middleware');
+const Dogtoliberror = require('../errors/dogtolib-error');
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.use('/veterinary', authMiddleware.checkToken, veterinaryRouter);
 router.use('/favorite', authMiddleware.checkToken, favoriteRouter);
 
 router.use(() => {
-  throw new Error('API Route not found', { statusCode: 404 });
+  throw new Dogtoliberror('API Route not found', 404);
 });
 
 module.exports = router;

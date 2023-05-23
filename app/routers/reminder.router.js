@@ -13,7 +13,7 @@ reminderRouter.route('/')
   * @tags Reminder
   * @typedef {object} reminder
   * @summary Renvoi les rappels de l’utilisateur connecté
-  * @return {[reminder]} 200 - Un tableau de rappels
+  * @return {[reminder]} 200 - reminders Un tableau de rappels
   */
   .get(controllerWrapper(reminderControler.getReminders))
 /**
@@ -34,7 +34,7 @@ reminderRouter.route('/animal/:id(\\d+)')
 /**
  * @summary Renvoi les rappels propres à un animal donné
  * @tags Reminder
- * @return {[reminder]} 200 - Un tableau de rappels
+ * @return {[reminder]} 200 - reminders Un tableau de rappels
  */
   .get(controllerWrapper(reminderControler.getAnimalReminders));
 

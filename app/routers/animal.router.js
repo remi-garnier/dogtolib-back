@@ -12,7 +12,7 @@ animalRouter.route('/')
  * GET /animal
  * @tags Animal
  * @summary retourne tous les animaux de l'utilisateur connecté
- * @ return {[Animal]]}
+ * @ return {[Animal]]} animals - Un tableau d'animaux
  * */
   .get(controllerWrapper(animalController.getAnimals))
   /**
