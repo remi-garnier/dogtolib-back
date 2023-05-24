@@ -41,5 +41,5 @@ VALUES
   ('faire des trucs de veto', '01/01/2024', 1),
   ('aller chercher le pain', '01/01/2025', 1),
   ('stock croquette', '01/01/2022', 1),
-  ('traitement anti-puce', '16/05/2023 00:00:00.000Z', 1);
+  ('traitement anti-puce', '16/05/2023 00:00:00', 1);
 COMMIT;
