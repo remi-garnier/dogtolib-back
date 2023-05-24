@@ -23,7 +23,7 @@ const animalController = {
    */
   async getAnimal(req, res) {
     const { animalId } = req.params;
-    const animalData = await animal.findByPk(animalId);
+    const animalData = await animal.findOneById(animalId);
     // Si l'animal n'existe pas
     if (!animalData) {
       return res.status(404).json({ animal: null });
