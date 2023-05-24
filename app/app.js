@@ -4,6 +4,7 @@ const express = require('express');
 const expressJsDocSwagger = require('express-jsdoc-swagger');
 const router = require('./routers');
 const errorHandler = require('./utils/error.handler');
+const jobScheduler = require('./services/schedule.service');
 
 // Configuration de express-jsdoc-swagger
 const options = {

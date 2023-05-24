@@ -72,4 +72,24 @@ module.exports = class Reminder extends CoreDatamapper {
 
     return result.rows;
   }
+
+  async findUpcomingReminders(days) {
+    const preparedQuery = {
+      text: `SELECT 
+              animal.name, 
+              TO_CHAR(reminder.datetime, 'DD/MM/YYYY HH24:MI') as datetime, 
+              coalesce(account.email, vetAccount.email) as email , 
+              reminder.label, 
+              reminder.title 
+            FROM reminder
+            LEFT JOIN animal ON reminder.animal_id = animal.id
+            LEFT JOIN account ON animal.account_id = account.id
+            LEFT JOIN veterinary ON reminder.veterinary_id = veterinary.id 
+            LEFT JOIN account vetAccount ON veterinary.account_id = vetAccount.id
+            WHERE date(datetime) = date(now() + interval '1 day' * $1)`,
+      values: [days],
+    };
+    const result = await this.client.query(preparedQuery);
+    return result.rows;
+  }
 };
