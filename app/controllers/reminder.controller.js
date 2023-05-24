@@ -20,7 +20,7 @@ const reminderController = {
   async getAnimalReminders(req, res) {
     const { id } = req.params;
     const reminders = await reminder.findAnimalReminders(id);
-    if (reminders[0].account_id !== req.userId) {
+    if (reminders.length !== 0 && reminders[0].account_id !== req.userId) {
       throw new DogtolibError('you are not allowed to see this animal reminders', 403);
     }
 
