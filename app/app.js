@@ -1,4 +1,5 @@
 const debug = require('debug')('app');
+const path = require('path');
 const cors = require('cors');
 const express = require('express');
 const expressJsDocSwagger = require('express-jsdoc-swagger');
@@ -32,12 +33,11 @@ const app = express();
 // Activer express-jsdoc-swagger
 expressJsDocSwagger(app)(options);
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(process.env.CORS_DOMAINS ?? '*'));
-app.use('/static', express.static('../public'));
 app.use(router);
 app.use(errorHandler);
-// notifyNextReminders();
 
 module.exports = app;
