@@ -51,7 +51,7 @@ function renderEmailTemplate(title, body) {
 
       .body {
         /* background-color: #f6f6f6;*/
-        background-image: url('https://dogtolib.herokuapp.com/static/image/dogHome.jpg');
+        background-image: url('https://dogtolib.herokuapp.com/image/dogHome.jpg');
         width: 100%; 
       }
 
