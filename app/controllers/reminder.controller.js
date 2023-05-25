@@ -1,5 +1,7 @@
 const DogtolibError = require('../errors/dogtolib-error');
 const { reminder, animal } = require('../models/index.datamapper');
+const notif = require('../services/notification.service');
+const debug = require('debug')('dogtolib:reminder.controller');
 
 const reminderController = {
 
@@ -49,6 +51,9 @@ const reminderController = {
 
       newReminder = await reminder.create({ ...req.body });
     }
+    // Envoi du mail de notification
+    await notif.sendNewReminderMail({ ...newReminder, recipient: req.userEmail });
+
     return res.status(201).json({ reminder: newReminder });
   },
 

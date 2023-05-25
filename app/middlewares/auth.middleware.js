@@ -18,6 +18,7 @@ module.exports = {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       req.userId = decodedToken.id;
       req.userRole = decodedToken.role;
+      req.userEmail = decodedToken.email;
       if (decodedToken.veterinaryId) {
         req.veterinaryId = decodedToken.veterinaryId;
       }

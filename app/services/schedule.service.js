@@ -1,21 +1,16 @@
 const schedule = require('node-schedule');
 const debug = require('debug')('app:schedule');
-const mailer = require('./mail.service');
+const notif = require('./notification.service');
+
 const { reminder } = require('../models/index.datamapper');
 
 async function printNextReminders() {
-  const reminders = await reminder.findUpcomingReminders(2);
-  const promises = [];
-  reminders.forEach((rem) => {
-    debug(`Next reminder: ${rem.datetime}${rem.title}${rem.email}`);
-    promises.push(mailer.sendMail(rem.email, rem.title, rem.label, rem.datetime));
-  });
+  const reminders = await reminder.findUpcomingReminders(1);
 
-  Promise.all(promises).then(() => {
-    debug('All reminders sent');
-  }).catch((error) => {
-    debug(error);
-  });
+  for (const reminder of reminders) {
+    debug(`Next reminder: ${reminder.datetime}${reminder.title}${reminder.email}`);
+    const info = await notif.sendReminderMailNotification(reminder.email, reminder.title, reminder.label, reminder.datetime);
+  }
 }
 
-module.exports = schedule.scheduleJob('*/10 * * * * * ', printNextReminders);
+module.exports = schedule.scheduleJob('0 0 7 * * * ', printNextReminders);

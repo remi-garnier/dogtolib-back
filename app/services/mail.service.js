@@ -14,12 +14,13 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-  sendMail: async (recipient, title, content, datetime) => {
+
+  sendMail: async (recipient, subject, rawBody) => {
     const info = await transporter.sendMail({
       from: '"Dogtolib" <oclockdogtolib@outlook.com>', // sender address
       to: `${recipient}`, // list of receivers
-      subject: `Dogtolib: rappel ${title}`, // Subject line
-      text: ` Rappel: ${title} : ${content}  le ${datetime}`, // plain text body
+      subject: `${subject}`, // Subject line
+      text: `${rawBody}`, // plain text body
     });
   },
 };
