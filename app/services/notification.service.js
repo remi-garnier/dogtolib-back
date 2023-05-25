@@ -51,7 +51,9 @@ function renderEmailTemplate(title, body) {
 
       .body {
         /* background-color: #f6f6f6;*/
-        background-image: url('https://dogtolib.herokuapp.com/static/image/dogHome.jpg');
+        background-image: url('https://dogtolib.herokuapp.com/image/dogHome.jpg');
+        background-position: center;
+        background-size: cover;
         width: 100%; 
       }
 
@@ -115,7 +117,7 @@ function renderEmailTemplate(title, body) {
       h2,
       h3,
       h4 {
-        color: #000000;
+        color: #1E70BF;
         font-family: sans-serif;
         font-weight: 400;
         line-height: 1.4;
@@ -355,6 +357,7 @@ function renderEmailTemplate(title, body) {
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
+                      <h1>Dogtolib</h1>
                         <p>Bonjour,</p>
                         <p>${body}</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
