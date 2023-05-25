@@ -38,6 +38,6 @@ app.use(cors(process.env.CORS_DOMAINS ?? '*'));
 app.use('/static', express.static('../public'));
 app.use(router);
 app.use(errorHandler);
-notifyNextReminders();
+// notifyNextReminders();
 
 module.exports = app;
