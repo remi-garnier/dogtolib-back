@@ -4,7 +4,7 @@ const express = require('express');
 const expressJsDocSwagger = require('express-jsdoc-swagger');
 const router = require('./routers');
 const errorHandler = require('./utils/error.handler');
-const jobScheduler = require('./services/schedule.service');
+const notifyNextReminders = require('./services/schedule.service');
 
 // Configuration de express-jsdoc-swagger
 const options = {
@@ -35,7 +35,9 @@ expressJsDocSwagger(app)(options);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(process.env.CORS_DOMAINS ?? '*'));
+app.use('/static', express.static('../public'));
 app.use(router);
 app.use(errorHandler);
+notifyNextReminders();
 
 module.exports = app;
