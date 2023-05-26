@@ -20,5 +20,5 @@ module.exports = Joi.object({
     .required(),
   role: Joi.string()
     .required(),
-  phone_number: Joi.string(),
+  phone_number: Joi.string().pattern(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/),
 }).with('password', 'repeat_password');
