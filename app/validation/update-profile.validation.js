@@ -12,7 +12,7 @@ module.exports = Joi.object({
   city: Joi.string(),
   zip_code: Joi.string(),
   phone_number: Joi.string(),
-  opening_hour: Joi.string().regex(/^([01]\d|2[0-3]):?([0-5]\d)$/),
-  closing_hour: Joi.string().regex(/^([01]\d|2[0-3]):?([0-5]\d)$/),
+  opening_hour: Joi.string().regex(/^([01]?\d|2[0-3]):?([0-5]\d)$/),
+  closing_hour: Joi.string().regex(/^([01]?\d|2[0-3]):?([0-5]\d)$/),
   payment_modes: Joi.string(),
 }).min(1).with('password', 'repeat_password');
