@@ -14,9 +14,9 @@ module.exports = class Veterinary extends CoreDatamapper {
             account.address as address,
             account.city as city,
             account.zip_code as zipcode,
-            veterinary.opening_hour as opening_hour,
-            veterinary.closing_hour as closing_hour,
-            veterinary.payment_modes as payment_modes
+            TO_CHAR(TO_TIMESTAMP(${this.tableName}.opening_hour::TEXT, 'HH24:MI:SS'), 'HH24:MI') AS opening_hour,
+            TO_CHAR(TO_TIMESTAMP(${this.tableName}.closing_hour::TEXT, 'HH24:MI:SS'), 'HH24:MI') AS closing_hour,
+            ${this.tableName}.payment_modes as payment_modes
             FROM ${this.tableName} 
             JOIN account ON account.id = ${this.tableName}.account_id
             WHERE ${this.tableName}.id = $1`,
@@ -45,8 +45,8 @@ module.exports = class Veterinary extends CoreDatamapper {
               account.role AS role,
               ${this.tableName}.id AS veterinary_id,
               ${this.tableName}.payment_modes AS payment_modes,
-              ${this.tableName}.opening_hour AS opening_hour,
-              ${this.tableName}.closing_hour AS closing_hour
+              TO_CHAR(TO_TIMESTAMP(${this.tableName}.opening_hour::TEXT, 'HH24:MI:SS'), 'HH24:MI') AS opening_hour,
+              TO_CHAR(TO_TIMESTAMP(${this.tableName}.closing_hour::TEXT, 'HH24:MI:SS'), 'HH24:MI') AS closing_hour
             FROM ${this.tableName} 
             JOIN account ON account.id = ${this.tableName}.account_id
             WHERE account.id = $1`,
@@ -102,8 +102,8 @@ module.exports = class Veterinary extends CoreDatamapper {
             account.zip_code AS zip_code,
             ${this.tableName}.id AS veterinary_id,
             ${this.tableName}.payment_modes AS payment_modes,
-            ${this.tableName}.opening_hour AS opening_hour,
-            ${this.tableName}.closing_hour AS closing_hour
+            TO_CHAR(TO_TIMESTAMP(${this.tableName}.opening_hour::TEXT, 'HH24:MI:SS'), 'HH24:MI') AS opening_hour,
+            TO_CHAR(TO_TIMESTAMP(${this.tableName}.closing_hour::TEXT, 'HH24:MI:SS'), 'HH24:MI') AS closing_hour
             FROM ${this.tableName}
             JOIN account ON account.id = ${this.tableName}.account_id
             WHERE 
