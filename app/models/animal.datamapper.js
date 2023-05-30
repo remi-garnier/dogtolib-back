@@ -18,7 +18,6 @@ module.exports = class Animal extends CoreDatamapper {
                breed,
                account_id,
                TO_CHAR(birthdate, 'DD/MM/YYYY') AS birthdate,
-               EXTRACT(YEAR FROM AGE(birthdate)) AS age,
                memo
              FROM "${this.tableName}" WHERE account_id = $1`,
       values: [accountId],
@@ -37,7 +36,6 @@ module.exports = class Animal extends CoreDatamapper {
                breed,
                account_id,
                TO_CHAR(birthdate, 'DD/MM/YYYY') AS birthdate,
-               EXTRACT(YEAR FROM AGE(birthdate)) AS age,
                memo
              FROM "${this.tableName}" WHERE id = $1`,
       values: [id],
