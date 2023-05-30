@@ -27,6 +27,11 @@ module.exports = class Animal extends CoreDatamapper {
     return result.rows;
   }
 
+  /**
+   * @summary Renvoi un animal donné
+   * @param {number} id id de l'animal
+   * @returns animal
+   */
   async findOneById(id) {
     const preparedQuery = {
       text: `SELECT 

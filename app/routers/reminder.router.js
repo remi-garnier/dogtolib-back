@@ -32,8 +32,10 @@ reminderRouter.route('/')
 
 reminderRouter.route('/animal/:id(\\d+)')
 /**
+ * GET /reminder/animal/{id}
  * @summary Renvoi les rappels propres à un animal donné
  * @tags Reminder
+ * @param {number} query.id.required - id de l'animal
  * @return {[reminder]} 200 - reminders Un tableau de rappels
  */
   .get(controllerWrapper(reminderControler.getAnimalReminders));
