@@ -2,15 +2,15 @@ const nodemailer = require('nodemailer');
 
 // Configuration de la connexion au serveur SMTP
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: process.env.SMTP_HOST,
   secureConnection: false,
-  port: 587, // 25,
+  port: parseInt(process.env.SMTP_PORT),
   tls: {
     ciphers: 'SSLv3',
   },
   auth: {
-    user: 'oclockdogtolib@gmail.com',
-    pass: 'ifocnvshhaktdacd',
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
